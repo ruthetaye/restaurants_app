@@ -1,0 +1,21 @@
+<h1>Restaurant List</h1>
+
+<ul>
+    <li *ngFor="let restaurant of restaurants">
+        <a routerLink="/restaurants/{{restaurant._id}}">
+            {{restaurant.name}}
+        </a>
+    </li>
+</ul>
+
+<br/>
+
+<button type="submit" class="btn btn-success" routerLink="/add"> Add Restaurant</button>
+<br/>
+<br/>
+
+<button type="submit" (click) ="previous()" class="btn btn-secondary" style="margin:5px">Previous</button>
+<button type="submit" (click)="next()" class="btn btn-secondary" style="margin:5px"> Next</button>
+
+
+

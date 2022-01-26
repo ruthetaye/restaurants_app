@@ -1,0 +1,18 @@
+
+<form #addRestaurantForm="ngForm" (ngSubmit)=save() novalidate>
+    <h2>Add New Restaurant</h2>
+    <div>
+        <label class="col-sm-1 form-label"> Name: </label>
+        <input class="col-sm-3" type="text" name="Name" ngModel placeholder="Name" required style="color:black" required [(ngModel)]="newRestaurant.name"/>
+    </div><br>
+     <div>
+        <label class="col-sm-1 form-label"> Year Open:</label>
+        <input class="col-sm-3" type="text" name="yearOpen" ngModel placeholder="Year Open" required style="color:black" required [(ngModel)]="newRestaurant.yearOpen" />
+    </div><br> 
+    <div>
+        <label  class="col-sm-1 form-label"> Category:</label>
+        <input class="col-sm-3" type="text" name="category" ngModel placeholder="Category" required style="color:black" required [(ngModel)]="newRestaurant.category" />
+    </div><br>
+    <button type="submit" [disabled]="addRestaurantForm.invalid" class=" btn btn-success"
+        style="margin-right: 15px;" routerLink="/restaurants">Add Restaurant</button>
+</form>

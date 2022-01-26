@@ -1,0 +1,57 @@
+<h2>{{restaurant.name}} Details</h2>
+
+<br/>
+
+<ul>
+    <li>Year Open: {{restaurant.yearOpen}}</li>
+    <li>Category: {{restaurant.category}}</li>
+</ul>
+
+<h4>Dishes:</h4>
+    <ul>
+        <li *ngFor="let dish of dishes" style="margin:5px">
+            {{dish.name}} 
+            {{dish.price | currency}}
+        </li>
+
+    </ul> 
+<br/>
+
+<h4>Add Dish</h4>
+<form #addDishForm="ngForm" (ngSubmit)=saveDish()>
+    <div>
+        <label class="col-sm-1 form-label"> Name: </label>
+        <input class="col-sm-3" type="text" name="Name" ngModel placeholder="Name" required style="color:black" required [(ngModel)]="newdish.name"/>
+    </div><br>
+    <div>
+        <label class="col-sm-1 form-label"> Price: </label>
+        <input class="col-sm-3" type="text" name="Price" ngModel placeholder="Price" required style="color:black" required [(ngModel)]="newdish.price"/>
+    </div><br>
+    <button (click)="saveDish()"type="button"  class=" btn btn-success"
+    style="margin-right: 15px;" [disabled]="addDishForm.invalid" routerLink="/restaurants">Add Dish</button>
+</form>
+<br/>
+
+<h4>Update Restaurant</h4>
+<form #updateDishForm="ngForm" (ngSubmit)=update()>
+    <div>
+        <label class="col-sm-1 form-label"> Name </label>
+        <input class="col-sm-3" type="text" name="Name" ngModel placeholder={{restaurant.name}} required style="color:black" required [(ngModel)]="updatedRestaurant.name"/>
+    </div><br>
+    <div>
+        <label class="col-sm-1 form-label"> Year Open </label>
+        <input class="col-sm-3" type="text" name="yearOpen" ngModel placeholder={{restaurant.yearOpen}} required style="color:black" required [(ngModel)]="updatedRestaurant.yearOpen"/>
+    </div><br>
+    <div>
+        <label class="col-sm-1 form-label"> Category: </label>
+        <input class="col-sm-3" type="text" name="category" ngModel placeholder={{restaurant.category}} required style="color:black" required [(ngModel)]="updatedRestaurant.category"/>
+    </div><br>
+    <button (click)="update()" type="button" class="btn btn-success" routerLink="/restaurants" [disabled]="updateDishForm.invalid" style="margin-right: 15px;"> Update</button> <br/> <br/> <br/>
+</form>
+    
+
+    
+
+<button (click)="delete()" type="button" class="btn btn-success" routerLink="/restaurants">Delete Restaurant</button> <br/>
+
+

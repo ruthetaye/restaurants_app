@@ -1,0 +1,9 @@
+<h1> Update Restaurant: {{restaurant.name}}</h1>
+
+<form>
+Name:      <input type="text" id="name" name="name" required [(ngModel)]="updatedRestaurant.name"/> <br/>
+Year Open:     <input type="text" id="yearOpen" name="yearOpen" required [(ngModel)]="updatedRestaurant.yearOpen"/> <br/>
+Category: <input type="text" id="category" name="category" required [(ngModel)]="updatedRestaurant.category"/> <br/>
+</form>
+
+<button (click)="update()" type="submit" class="btn btn-success" routerLink="/restaurants"> Update</button>

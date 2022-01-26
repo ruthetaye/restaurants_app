@@ -7,10 +7,6 @@
     "start":"node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ruthetaye/restaurants_app.git"
-  },
   "keywords": [
     "EXPRESS",
     "MEAN",
@@ -18,10 +14,6 @@
   ],
   "author": "Ruth Taye",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ruthetaye/restaurants_app/issues"
-  },
-  "homepage": "https://github.com/ruthetaye/restaurants_app#readme",
   "dependencies": {
     "dotenv": "^12.0.3",
     "express": "^4.17.2",

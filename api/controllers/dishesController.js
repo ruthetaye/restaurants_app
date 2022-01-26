@@ -1,6 +1,53 @@
 const mongoose = require("mongoose");
 const Restaurant = mongoose.model(process.env.DB_RESTAURANTS_MODEL);
 
+const _saveUpdateOne = function(res,restaurant,response){
+    restaurant.save(function(err,updatedRestaurant){
+        if(err){
+            response.status=500;
+            response.message=err;
+            console.log("in err of save");
+        } 
+            console.log(response.message);
+            res.status(response.status).json(response.message);
+    });
+}
+
+const _updateOne = function(req,res,updateDishCallback){
+
+    console.log("fullUpdateOne dish controller invoked");
+    const restaurantId = req.params.restaurantId;
+
+    if(!mongoose.isValidObjectId(restaurantId)){
+        console.log("request param restaurantId is not a valid ID");
+        res.status(400).json({"message": "RestaurantId must be a valid ID"});
+        return;
+    };
+
+    Restaurant.findById(restaurantId).select("dishes").exec(function(err, restaurant){
+        console.log("Found restaurant",restaurant);
+        const response={
+            status:200,
+            message:restaurant
+        };
+        if(err){
+            console.log("Error finding restaurant");
+            response.status=500;
+            response.message=err;
+        } else if(!restaurant){
+            console.log("Error finding restaurant");
+            response.status=404;
+            response.message={"message":"Restaurant ID not found"+restaurantId};
+        }
+        if(response.status !==200){
+            res.status(response.status).json(response.message);
+        } else{
+            updateDishCallback(req,res,restaurant,response);
+        }
+    });
+}
+
+
 const _addDish = function(req,res,restaurant){
     const newDish = {
         name:req.body.name,
@@ -26,26 +73,25 @@ const _addDish = function(req,res,restaurant){
     });
 }
 
-const _updateDish = function(req,res,restaurant){
+const _fullDishUpdate = function(req,res,restaurant,response){
     const dishId = req.params.dishId;
  
     restaurant.dishes.id(dishId).name = req.body.name;
     restaurant.dishes.id(dishId).price= req.body.price;
-    restaurant.save(function(err,updatedDish){
-        const response = {
-            status: 200,
-            message: []
-        }
-        if(err){
-            response.status= 500;
-            response.message= err;
-        }else{
-            response.status= 201;
-            response.message= {"updated dish with id":dishId};
-        }
-        res.status(response.status).json(response.message);
-    });
-        
+
+    _saveUpdateOne(res,restaurant,response);        
+}
+
+const _partialDishUpdate = function(req,res,restaurant,response){
+    const dishId = req.params.dishId;
+    console.log("here");
+    if (req.body.name){
+        restaurant.dishes.id(dishId).name = req.body.name;
+    }
+    if(req.body.price){
+        restaurant.dishes.id(dishId).price= req.body.price;
+    }
+    _saveUpdateOne(res,restaurant,response);
 }
 
 const _deleteDish = function(req,res,restaurant){
@@ -187,41 +233,25 @@ const deleteOne=function(req,res){
         } else{
             res.status(response.status).json(response.message);
         } 
-});
+    });
 }
 
 const fullUpdateOne = function(req,res){
-
-    console.log("fullUpdateOne dish controller invoked");
-    const restaurantId = req.params.restaurantId;
-
-    Restaurant.findById(restaurantId).select("dishes").exec(function(err, restaurant){
-        console.log("Found restaurant",restaurant);
-        const response={
-            status:200,
-            message:restaurant
-        };
-        if(err){
-            console.log("Error finding restaurant");
-            response.status=500;
-            response.message=err;
-        } else if(!restaurant){
-            console.log("Error finding restaurant");
-            response.status=404;
-            response.message={"message":"Restaurant ID not found"+restaurantId};
-        }
-        if(restaurant){
-            _updateDish(req,res,restaurant);
-        } else{
-            res.status(response.status).json(response.message);
-        } 
-    });
+    console.log("full update one dish invoked");
+    _updateOne(req,res,_fullDishUpdate);     
 }
+
+const partialUpdateOne = function(req,res){
+    console.log("partial update one dish invoked");
+    _updateOne(req,res,_partialDishUpdate);
+}
+
 
 module.exports ={
     getAll,
     getOne,
     addOne,
     deleteOne,
-    fullUpdateOne
+    fullUpdateOne,
+    partialUpdateOne
 }

@@ -1,0 +1,21 @@
+<h2>Search for Restaurants</h2>
+
+<form #searchForm="ngForm" (ngSubmit)=search()>
+    <div>
+        <label class="col-sm-1 form-label"> Lat: </label>
+        <input class="col-sm-3" type="text" name="latitude" ngModel placeholder="Latitude" required style="color:black" required [(ngModel)]="location.lat"/>
+    </div><br>
+    <div>
+        <label class="col-sm-1 form-label"> Lng: </label>
+        <input class="col-sm-3" type="text" name="lng" ngModel placeholder="Longtitude" required style="color:black" required [(ngModel)]="location.lng"/>
+    </div><br>
+    <div>
+        <label class="col-sm-1 form-label"> Distance: </label>
+        <input class="col-sm-3" type="text" name="distance" ngModel placeholder="Distance" required style="color:black" required [(ngModel)]="location.distance"/>
+    </div><br>
+    <button (click)="search()"type="button"  class=" btn btn-success"
+    style="margin-right: 15px;" [disabled]="searchForm.invalid" routerLink="/restaurants">Search</button>
+</form>
+
+
+

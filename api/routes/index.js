@@ -9,6 +9,7 @@ router.route("/restaurants")
 router.route("/restaurants/:restaurantId")
     .get(restaurantsController.getOne)
     .put(restaurantsController.fullUpdateOne)
+    .patch(restaurantsController.partialUpdateOne)
     .delete(restaurantsController.deleteOne);
 router.route("/restaurants/:restaurantId/dishes")
     .get(dishesController.getAll)
@@ -16,6 +17,7 @@ router.route("/restaurants/:restaurantId/dishes")
 router.route("/restaurants/:restaurantId/dishes/:dishId")
     .get(dishesController.getOne)
     .put(dishesController.fullUpdateOne)
+    .patch(dishesController.partialUpdateOne)
     .delete(dishesController.deleteOne);
 
 module.exports = router;

@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
 const dishesSchema = mongoose.Schema({
-    //_id: mongoose.Types.ObjectId(),
-    // _id:mongoose.Types.ObjectId(),
     name:{
         type:String,
         required: true
@@ -10,7 +8,13 @@ const dishesSchema = mongoose.Schema({
     price:{
         type: Number,
         required: true
-    }
+    },
+    location: {
+        coordinates: {
+            type: [Number], 
+            index: "2dsphere"
+        }
+    }  
 })
 
 const restaurantsSchema = mongoose.Schema({
